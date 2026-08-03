@@ -1,5 +1,5 @@
 {
-  "name": "mock/mock-data-generator",
+  "name": "@sahilkhatiwada/mock-data-generator",
   "version": "1.0.5",
   "description": "Generate realistic mock data without external dependencies",
   "main": "dist/index.js",
@@ -28,7 +28,6 @@
     "prepublishOnly": "npm run build && npm run test:run",
     "version": "node scripts/update-changelog.js && git add CHANGELOG.md",
     "postversion": "git push origin master & git push origin --tags",
-    "publish:dry": "npm publish --access public --dry-run",
     "release:patch": "npm version patch",
     "release:minor": "npm version minor",
     "release:major": "npm version major"
@@ -53,9 +52,6 @@
     "url": "https://github.com/sahilkhatiwada/mock-data-generator/issues"
   },
   "homepage": "https://github.com/sahilkhatiwada/mock-data-generator#readme",
-  "publishConfig": {
-    "access": "public"
-  },
   "engines": {
     "node": ">=14.0.0"
   },
