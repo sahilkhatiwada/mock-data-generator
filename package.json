@@ -1,6 +1,6 @@
 {
   "name": "mock-data-generator",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Generate realistic mock data without external dependencies",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
