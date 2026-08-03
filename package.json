@@ -27,7 +27,10 @@
     "format": "prettier --write src tests examples",
     "prepublishOnly": "npm run build && npm run test:run",
     "version": "node scripts/update-changelog.js && git add CHANGELOG.md",
-    "postversion": "git push && git push --tags"
+    "postversion": "git push origin master & git push origin --tags",
+    "release:patch": "npm version patch",
+    "release:minor": "npm version minor",
+    "release:major": "npm version major"
   },
   "keywords": [
     "mock",
