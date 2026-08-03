@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mock-data-generator — Playground</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="header__brand">
+      <span class="header__icon">⚡</span>
+      <span class="header__title">mock-data-generator</span>
+      <span class="header__badge">v1.0.0</span>
+    </div>
+    <div class="header__links">
+      <span class="header__tag">Zero dependencies</span>
+      <span class="header__tag">TypeScript</span>
+      <span class="header__tag">Seeded PRNG</span>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside class="panel panel--controls">
+      <h2 class="panel__heading">Configuration</h2>
+      <section class="control-group">
+        <label class="control-label">Entity Type</label>
+        <div class="type-tabs" id="typeTabs">
+          <button class="type-tab type-tab--active" data-type="users">Users</button>
+          <button class="type-tab" data-type="products">Products</button>
+          <button class="type-tab" data-type="orders">Orders</button>
+          <button class="type-tab" data-type="multi">Multi-Type</button>
+        </div>
+      </section>
+      <section class="control-group" id="multiGroup" style="display:none">
+        <label class="control-label">Records per type</label>
+        <div class="multi-row">
+          <span class="multi-label">Users</span>
+          <input class="input input--sm" type="number" id="multiUsers" value="5" min="0" max="1000" />
+        </div>
+        <div class="multi-row">
+          <span class="multi-label">Products</span>
+          <input class="input input--sm" type="number" id="multiProducts" value="10" min="0" max="1000" />
+        </div>
+        <div class="multi-row">
+          <span class="multi-label">Orders</span>
+          <input class="input input--sm" type="number" id="multiOrders" value="8" min="0" max="1000" />
+        </div>
+      </section>
+      <section class="control-group" id="countGroup">
+        <label class="control-label" for="count">Count <span class="control-hint" id="countHint">10</span></label>
+        <input class="range" type="range" id="count" min="1" max="500" value="10" />
+      </section>
+      <section class="control-group">
+        <label class="control-label">
+          Seed
+          <span class="control-hint">reproducible output</span>
+        </label>
+        <div class="seed-row">
+          <input class="input" type="number" id="seed" placeholder="random" min="0" />
+          <button class="btn btn--ghost btn--sm" id="randomSeed" title="Generate random seed">🎲</button>
+          <button class="btn btn--ghost btn--sm" id="clearSeed" title="Clear seed (random)">✕</button>
+        </div>
+      </section>
+      <section class="control-group">
+        <label class="control-label">
+          Custom Fields
+          <span class="control-hint">JS expressions</span>
+        </label>
+        <div class="fields-list" id="fieldsList"></div>
+        <button class="btn btn--ghost btn--sm btn--full" id="addField">+ Add field override</button>
+      </section>
+      <section class="control-group">
+        <label class="control-label">Display</label>
+        <div class="toggle-row">
+          <label class="toggle">
+            <input type="checkbox" id="prettyPrint" checked />
+            <span class="toggle__track"></span>
+            <span class="toggle__label">Pretty print</span>
+          </label>
+        </div>
+        <div class="toggle-row">
+          <label class="toggle">
+            <input type="checkbox" id="syntaxHL" checked />
+            <span class="toggle__track"></span>
+            <span class="toggle__label">Syntax highlight</span>
+          </label>
+        </div>
+      </section>
+      <button class="btn btn--primary btn--full" id="generateBtn">
+        <span class="btn__icon">▶</span> Generate
+      </button>
+    </aside>
+    <section class="panel panel--output">
+      <div class="output-toolbar">
+        <div class="output-stats" id="outputStats">
+          <span class="stat" id="statCount">—</span>
+          <span class="stat-sep">·</span>
+          <span class="stat" id="statSize">—</span>
+          <span class="stat-sep">·</span>
+          <span class="stat" id="statTime">—</span>
+        </div>
+        <div class="output-actions">
+          <button class="btn btn--ghost btn--sm" id="copyBtn" title="Copy JSON">Copy</button>
+          <button class="btn btn--ghost btn--sm" id="downloadBtn" title="Download as JSON">Download</button>
+          <button class="btn btn--ghost btn--sm" id="clearBtn" title="Clear output">Clear</button>
+        </div>
+      </div>
+      <div class="output-wrapper">
+        <pre class="output" id="output"><span class="output__placeholder">Click <strong>Generate</strong> to produce mock data…</span></pre>
+      </div>
+      <div class="schema-bar">
+        <span class="schema-label">Schema preview:</span>
+        <button class="schema-tab schema-tab--active" data-schema="users">User</button>
+        <button class="schema-tab" data-schema="products">Product</button>
+        <button class="schema-tab" data-schema="orders">Order</button>
+      </div>
+      <div class="schema-output" id="schemaOutput"></div>
+
+    </section>
+  </main>
+  <div class="toast" id="toast"></div>
+  <script src="bundle.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

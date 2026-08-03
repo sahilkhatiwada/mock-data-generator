@@ -2,8 +2,8 @@
 
 [![npm version](https://img.shields.io/npm/v/mock-data-generator.svg)](https://www.npmjs.com/package/mock-data-generator)
 [![npm downloads](https://img.shields.io/npm/dm/mock-data-generator.svg)](https://www.npmjs.com/package/mock-data-generator)
-[![Build Status](https://github.com/username/mock-data-generator/actions/workflows/ci.yml/badge.svg)](https://github.com/username/mock-data-generator/actions)
-[![Coverage](https://codecov.io/gh/username/mock-data-generator/branch/main/graph/badge.svg)](https://codecov.io/gh/username/mock-data-generator)
+[![Build Status](https://github.com/sahilkhatiwada/mock-data-generator/actions/workflows/ci.yml/badge.svg)](https://github.com/sahilkhatiwada/mock-data-generator/actions)
+[![Coverage](https://codecov.io/gh/sahilkhatiwada/mock-data-generator/branch/main/graph/badge.svg)](https://codecov.io/gh/sahilkhatiwada/mock-data-generator)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue.svg)](https://www.typescriptlang.org/)
 
@@ -314,12 +314,13 @@ import type {
 3. Make changes in `src/`, add tests in `tests/`
 4. Run `npm test` — all tests must pass with ≥ 90% coverage
 5. Run `npm run build` to verify the TypeScript compiles cleanly
-6. Open a pull request
+6. Open a pull request at https://github.com/sahilkhatiwada/mock-data-generator
 
 ---
 
 ## License
 
-MIT © Your Name — see [LICENSE](LICENSE) for details.
-#   m o c k - d a t a - g e n e r a t o r  
+MIT © Sahil Khatiwada — see [LICENSE](LICENSE) for details.
+#   m o c k - d a t a - g e n e r a t o r 
+ 
  

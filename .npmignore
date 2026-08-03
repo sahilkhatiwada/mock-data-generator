@@ -1,0 +1,12 @@
+node_modules/
+coverage/
+src/
+tests/
+examples/
+docs/
+.github/
+*.spec.ts
+tsconfig*.json
+.eslintrc.js
+.prettierrc
+*.log
