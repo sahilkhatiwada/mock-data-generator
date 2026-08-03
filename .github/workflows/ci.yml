@@ -12,8 +12,9 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
+      fail-fast: false
       matrix:
-        node-version: ['18.x', '20.x']
+        node-version: ['18.x', '20.x', '22.x']
 
     steps:
       - name: Checkout
@@ -44,7 +45,6 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./coverage/lcov.info
           fail_ci_if_error: false
-          # Repository: https://github.com/sahilkhatiwada/mock-data-generator
 
   build:
     name: Build
