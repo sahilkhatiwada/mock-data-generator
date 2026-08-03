@@ -1,0 +1,60 @@
+name: PR Checks
+
+# Runs on every pull request to main/master.
+# Adds a PR title lint check and a label based on the branch name.
+
+on:
+  pull_request:
+    branches: [main, master]
+    types: [opened, edited, synchronize, reopened]
+
+jobs:
+  # ── PR title must follow Conventional Commits ─────────────────────────────
+  pr-title:
+    name: Validate PR title
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check PR title format
+        run: |
+          TITLE="${{ github.event.pull_request.title }}"
+          # Allow: feat|fix|chore|docs|refactor|test|ci|perf|style|build: <description>
+          if echo "$TITLE" | grep -qE "^(feat|fix|chore|docs|refactor|test|ci|perf|style|build|revert)(\(.+\))?: .{1,80}$"; then
+            echo "PR title is valid: $TITLE"
+          else
+            echo "ERROR: PR title must follow Conventional Commits format."
+            echo "Examples:"
+            echo "  feat: add new generator type"
+            echo "  fix: correct PRNG overflow on Node 24"
+            echo "  chore: bump @typescript-eslint to v8"
+            exit 1
+          fi
+
+  # ── Size check ─────────────────────────────────────────────────────────────
+  size-check:
+    name: Bundle size check
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Check dist size
+        run: |
+          DIST_KB=$(du -sk dist/ | cut -f1)
+          echo "dist/ size: ${DIST_KB} KB"
+          if [ "$DIST_KB" -gt 500 ]; then
+            echo "WARNING: dist/ exceeds 500 KB (${DIST_KB} KB). Consider tree-shaking."
+          else
+            echo "Size OK (${DIST_KB} KB)"
+          fi

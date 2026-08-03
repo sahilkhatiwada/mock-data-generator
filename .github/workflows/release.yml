@@ -1,0 +1,144 @@
+name: Release & Publish
+
+# Triggered automatically when a semver tag v* is pushed to main/master,
+# OR manually via workflow_dispatch so you can release without a tag.
+#
+# Workflow:
+#   1. Developer merges feature branch → main/master (PR must pass CI)
+#   2. Developer bumps version: npm version patch|minor|major
+#      (this creates a git tag and commit automatically)
+#   3. Developer pushes: git push origin master --tags
+#   4. This workflow fires, builds, publishes to npm, and creates a GitHub Release.
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release (e.g. 1.0.1) — must match package.json'
+        required: true
+        type: string
+      dry_run:
+        description: 'Dry run — build and test but do NOT publish'
+        required: false
+        default: 'false'
+        type: choice
+        options: ['false', 'true']
+
+jobs:
+  # ── 1. Verify everything still passes on the tag commit ───────────────────
+  verify:
+    name: Verify (lint + test + build)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type-check
+        run: npx tsc --noEmit
+
+      - name: Lint
+        run: npx eslint src tests --ext .ts
+
+      - name: Tests
+        run: npm run test:run
+
+      - name: Build
+        run: npm run build
+
+      - name: Verify dist
+        run: |
+          test -f dist/index.js
+          test -f dist/index.d.ts
+          echo "Dist OK"
+
+  # ── 2. Publish to npm ─────────────────────────────────────────────────────
+  publish-npm:
+    name: Publish to npm
+    runs-on: ubuntu-latest
+    needs: verify
+    if: ${{ github.event.inputs.dry_run != 'true' }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          registry-url: 'https://registry.npmjs.org'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: npm login check
+        run: npm whoami
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish package
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Published version
+        run: |
+          PKG_VERSION=$(node -p "require('./package.json').version")
+          echo "Published mock-data-generator@${PKG_VERSION} to npm"
+
+  # ── 3. Create GitHub Release ──────────────────────────────────────────────
+  github-release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    needs: publish-npm
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Extract version from tag
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "VERSION=${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
+          else
+            echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Extract changelog entry
+        id: changelog
+        run: |
+          VERSION=${{ steps.version.outputs.VERSION }}
+          # Pull the section for this version from CHANGELOG.md
+          NOTES=$(awk "/## \[${VERSION}\]/{flag=1; next} /## \[/{flag=0} flag" CHANGELOG.md)
+          if [ -z "$NOTES" ]; then
+            NOTES="See [CHANGELOG.md](./CHANGELOG.md) for details."
+          fi
+          # Write to file to avoid quoting issues
+          echo "$NOTES" > release_notes.txt
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.version.outputs.VERSION }}
+          name: v${{ steps.version.outputs.VERSION }}
+          body_path: release_notes.txt
+          draft: false
+          prerelease: false

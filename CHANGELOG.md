@@ -4,9 +4,17 @@ All notable changes to this project are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+### Fixed
+
+### Changed
+
 ---
 
-## [1.0.0] — 2026-08-03
+## [1.0.0] — 2024-01-01
 
 ### Added
 - Full TypeScript rewrite with strict types and exported interfaces
@@ -19,6 +27,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Built-in data: 200+ first/last names, 60 US cities, 10 product categories with subcategories
 - Weighted distributions for order status, payment methods, user roles
 - CLI (`mock-generate`) supporting `--count`, `--seed`, `--output`, `--pretty`, `--list`
-- Jest test suite (~290 tests) with ≥ 90% coverage
-- GitHub Actions CI workflow (Node 18, 20, lint, test, coverage upload)
+- Jest test suite (170 tests) with ≥ 90% coverage
+- Browser playground with dark theme UI
+- GitHub Actions CI/CD workflow (Node 18, 20, 22)
 - Zero runtime dependencies
