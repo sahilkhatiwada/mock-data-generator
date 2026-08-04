@@ -356,7 +356,7 @@ import type {
   FieldOverrideFn,
   GenerationContext,
   WeightedItem,
-} from 'sahil-mock-data-generator';
+} from 'mocks-data-generator';
 ```
 
 ---
