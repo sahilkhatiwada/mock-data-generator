@@ -1,9 +1,9 @@
-# sahil-mock-data-generator
+# mocks-data-generator
 
-[![npm version](https://img.shields.io/npm/v/sahil-mock-data-generator.svg?style=flat-square)](https://www.npmjs.com/package/sahil-mock-data-generator)
-[![npm downloads](https://img.shields.io/npm/dm/sahil-mock-data-generator.svg?style=flat-square)](https://www.npmjs.com/package/sahil-mock-data-generator)
+[![npm version](https://img.shields.io/npm/v/sahil-mock-data-generator.svg?style=flat-square)](https://www.npmjs.com/package/mocks-data-generator)
+[![npm downloads](https://img.shields.io/npm/dm/sahil-mock-data-generator.svg?style=flat-square)](https://www.npmjs.com/package/mocks-data-generator)
 [![CI](https://github.com/sahilkhatiwada/mock-data-generator/actions/workflows/ci.yml/badge.svg)](https://github.com/sahilkhatiwada/mock-data-generator/actions/workflows/ci.yml)
-[![Coverage](https://codecov.io/gh/sahilkhatiwada/mock-data-generator/branch/master/graph/badge.svg)](https://codecov.io/gh/sahilkhatiwada/mock-data-generator)
+[![Coverage](https://codecov.io/gh/sahilkhatiwada/mock-data-generator/branch/master/graph/badge.svg)](https://codecov.io/gh/sahilkhatiwada/mocks-data-generator)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178c6.svg?style=flat-square)](https://www.typescriptlang.org/)
 [![Node](https://img.shields.io/badge/Node-%3E%3D14-339933.svg?style=flat-square)](https://nodejs.org)
@@ -48,7 +48,7 @@
 ## Installation
 
 ```bash
-npm install sahil-mock-data-generator
+npm install mocks-data-generator
 ```
 
 Run instantly without installing:
@@ -62,8 +62,8 @@ npx mock-generate users --count=10 --pretty
 ## Quick Start
 
 ```ts
-import { generate } from 'sahil-mock-data-generator';
-import type { User, Product, Order } from 'sahil-mock-data-generator';
+import { generate } from 'mocks-data-generator';
+import type { User, Product, Order } from 'mocks-data-generator';
 
 // Single type — returns a typed array
 const users: User[]       = generate('users',    { count: 50 });
@@ -275,7 +275,7 @@ const records = [...generateStream('products', { count: 5000 })];
 Low-level seeded PRNG — useful when writing custom generators.
 
 ```ts
-import { Random } from 'sahil-mock-data-generator';
+import { Random } from 'mocks-data-generator';
 
 const rng = new Random(42); // same seed → same sequence every time
 
@@ -369,8 +369,8 @@ import type {
 Register your own data types and use them anywhere `generate()` is called.
 
 ```ts
-import { registerGenerator, listGenerators } from 'sahil-mock-data-generator';
-import type { GeneratorFn } from 'sahil-mock-data-generator';
+import { registerGenerator, listGenerators } from 'mocks-data-generator';
+import type { GeneratorFn } from 'mocks-data-generator';
 
 interface Employee {
   id: number;
