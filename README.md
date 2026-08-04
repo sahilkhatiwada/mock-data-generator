@@ -1,9 +1,6 @@
 # mocks-data-generator
 
-[![npm version](https://img.shields.io/npm/v/sahil-mock-data-generator.svg?style=flat-square)](https://www.npmjs.com/package/mocks-data-generator)
-[![npm downloads](https://img.shields.io/npm/dm/sahil-mock-data-generator.svg?style=flat-square)](https://www.npmjs.com/package/mocks-data-generator)
 [![CI](https://github.com/sahilkhatiwada/mock-data-generator/actions/workflows/ci.yml/badge.svg)](https://github.com/sahilkhatiwada/mock-data-generator/actions/workflows/ci.yml)
-[![Coverage](https://codecov.io/gh/sahilkhatiwada/mock-data-generator/branch/master/graph/badge.svg)](https://codecov.io/gh/sahilkhatiwada/mocks-data-generator)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178c6.svg?style=flat-square)](https://www.typescriptlang.org/)
 [![Node](https://img.shields.io/badge/Node-%3E%3D14-339933.svg?style=flat-square)](https://nodejs.org)
